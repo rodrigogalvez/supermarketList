@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "supermarketList_backend": {
+      "main": "src/supermarketList_backend/main.mo",
+      "type": "motoko"
+    },
+    "supermarketList_frontend": {
+      "dependencies": [
+        "supermarketList_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/supermarketList_frontend/src/index.html"
+      },
+      "source": [
+        "src/supermarketList_frontend/assets",
+        "dist/supermarketList_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
