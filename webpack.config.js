@@ -11,6 +11,8 @@ const frontendDirectory = "supermarketList_frontend";
 
 const frontend_entry = path.join("src", frontendDirectory, "src", "index.html");
 
+const { VueLoaderPlugin } = require('vue-loader');
+
 module.exports = {
   target: "web",
   mode: isDevelopment ? "development" : "production",
@@ -50,6 +52,25 @@ module.exports = {
   //    { test: /\.css$/, use: ['style-loader','css-loader'] }
   //  ]
   // },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
+      },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, frontend_entry),
@@ -75,6 +96,7 @@ module.exports = {
         },
       ],
     }),
+    new VueLoaderPlugin(),
   ],
   // proxy /api to port 4943 during development.
   // if you edit dfx.json to define a project-specific local network, change the port to match.

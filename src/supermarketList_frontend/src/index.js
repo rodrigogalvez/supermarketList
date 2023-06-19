@@ -1,4 +1,7 @@
-import { supermarketList_backend } from "../../declarations/supermarketList_backend";
+import { createApp } from "vue";
+import App from "./App.vue";
+
+// import { supermarketList_backend } from "../../declarations/supermarketList_backend";
 
 // document.querySelector("form").addEventListener("submit", async (e) => {
 //   e.preventDefault();
@@ -20,9 +23,4 @@ import { supermarketList_backend } from "../../declarations/supermarketList_back
 //   return false;
 // });
 
-const { createApp, ref } = Vue;
-createApp({
-  setup() {
-
-  }
-}).mount("#app");
+createApp(App).mount("#app");

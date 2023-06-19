@@ -1,0 +1,8 @@
+dfx new supermarketList
+cd supermarketList/
+npm install
+dfx build
+npm add vue
+npm install --save-dev vue-loader vue-template-compiler
+npm install --save babel-loader
+dfx deploy -v
