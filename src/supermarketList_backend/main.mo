@@ -7,12 +7,8 @@ actor {
 
   var tasks : Types.List<Types.task> = List.nil();
 
-  public query func greet(name : Text) : async Text {
-    return "Hello, " # name # "!";
-  };
-
   public query func enumerateStatus() : async [Text] {
-    return ["Pending", "Found", "Not found", "Delete"];
+    return ["Buscando...", "¡Lo encontré!", "No hay"];
   };
 
   public func createTask(id : Text, description : Text) {
@@ -20,7 +16,7 @@ actor {
     let newTask : Types.task = {
       id : Text = id;
       description : Text = description;
-      status : Nat = 0;
+      status : Nat8 = 0;
     };
 
     tasks := List.push(newTask, tasks);
@@ -30,11 +26,29 @@ actor {
     tasks := List.filter(tasks, func(x : Types.task) : Bool { return id != x.id });
   };
 
-  public func deleteTaskByStatus(status : Nat) {
+  public func deleteTaskByStatus(status : Nat8) {
     tasks := List.filter(tasks, func(x : Types.task) : Bool { return status != x.status });
   };
 
-  public query func countTasksByStatus(status : Nat) : async Nat {
+  public func changeTaskStatus(id : Text, status : Nat8) {
+    tasks := List.map(
+      tasks,
+      func(x : Types.task) : Types.task {
+        if (x.id == id) {
+          let newTask : Types.task = {
+            id : Text = x.id;
+            description : Text = x.description;
+            status : Nat8 = status;
+          };
+          return newTask;
+        } else {
+          return x;
+        };
+      },
+    );
+  };
+
+  public query func countTasksByStatus(status : Nat8) : async Nat {
 
     var count = 0;
     List.iterate(
@@ -48,8 +62,12 @@ actor {
     //return List.size<Types.task>(tasks);
   };
 
-  public query func selectTastksByStatus(status : Nat) : async [Types.task] {
+  public query func filterTastksByStatus(status : Nat8) : async [Types.task] {
     return List.toArray(List.filter(tasks, func(x : Types.task) : Bool { return status == x.status }));
+  };
+
+  public query func getAllTastks() : async [Types.task] {
+    return List.toArray(List.filter(tasks, func(x : Types.task) : Bool { return x.status != 3 }));
   };
 
 };
